@@ -1,0 +1,203 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh_cn" lang="zh_cn">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+<title></title>
+<script language="JavaScript" type="text/javascript" src="Scripts/APIWrapper.js"></script>
+<script language="JavaScript" type="text/javascript" src="Scripts/SCOFunctions.js"></script>
+<script language="JavaScript" type="text/javascript" src="Scripts/AC_RunActiveContent.js"></script>
+<style type="text/css">
+<!--
+
+html, body { height:100%; background-color: #FFFFFFF;text-align:center;}
+#flashDIV {
+  margin:0px auto;
+    text-align:center;
+   width:1000px;height:560px;
+}
+#main{
+	width:1000px;height:560px;margin-left:0px;margin-top:0px;
+}
+-->
+</style>
+<script language="JavaScript">
+   var NewScore=0;
+   loadPage();
+   function calcScore(args)
+   {
+      exitPageStatus = true;
+      computeTime();        
+      doLMSSetValue( "cmi.core.score.raw", NewScore );      
+      currentstatus=args.toLowerCase();
+      doLMSSetValue( "cmi.core.lesson_status", currentstatus );
+      exitPageStatus = true;
+	  //alert(currentstatus);
+	   doLMSCommit();
+      doLMSFinish();
+     
+   }
+
+// function thisMovie(movieName) {
+//       if (navigator.appName.indexOf("Microsoft") != -1) {
+//           return window[movieName];
+//       } else {
+//           return document[movieName];
+//       }
+//   }
+   
+    function thisMovie(movieName)
+	{
+		if (window.document[movieName])
+		{
+		    return window.document[movieName];
+		}
+			if (navigator.appName.indexOf("Microsoft Internet")==-1)
+		{
+			if (document.embeds && document.embeds[movieName])
+			return document.embeds[movieName];
+		}
+		else // if (navigator.appName.indexOf("Microsoft Internet")!=-1)
+		{
+			return document.getElementByIdx_x_x(movieName);
+		}
+	}
+
+	 
+     function sendLocationToActionScript() {
+      thisMovie("main").sendLocationToActionScript(doLMSGetValue("cmi.core.lesson_location"));
+     }
+	 
+     function getLocation(){
+		sendLocationToActionScript();
+	}
+	
+	  function sendSuspendToActionScript() {
+      thisMovie("main").sendSuspendToActionScript(doLMSGetValue("cmi.suspend_data"));
+
+     }
+	 
+    function getSuspend(){
+		sendSuspendToActionScript();
+	}
+	
+	
+   function SetComplete()
+   {      
+      currentstatus="completed";
+      doLMSSetValue( "cmi.core.lesson_status",  currentstatus);
+   }
+
+
+function setScore(args){
+	NewScore=parseInt(args);
+	doLMSSetValue( "cmi.core.score.raw", NewScore );
+}
+
+function getScore(){
+	
+	thisMovie("main").sendScoreToActionScript(doLMSGetValue( "cmi.core.score.raw"));
+}
+
+function winclose(){
+	//window.opener.location.reload(); 
+	//SendTrackingData("");	
+        //doQuit();
+	if(confirm("")){
+		top.close();
+	}
+}
+
+function setLocation(args){
+	//alert("location:"+args)
+	doLMSSetValue("cmi.core.lesson_location", args);
+}
+
+function setSuspenddata(args){
+	//alert("supend:"+args)
+	doLMSSetValue("cmi.suspend_data", args);
+}
+
+function setprogressdata(args){
+	//alert("progress:"+args)
+	doLMSSetValue( "cmi.core.lesson_progress", args );
+}
+
+function Flow(command,args)
+{
+    switch (command.toUpperCase()) {
+    //new program
+	 case "LOCATION":
+	   setLocation(args);
+       break;
+	 case "SUSPEND":
+	   setSuspenddata(args);
+       break;	
+    case "SETCOMPLETE":
+       SetComplete();
+       break; 
+    case "PROGRESSDATA":
+       setprogressdata(args)
+       break;   
+    case "SCORE":
+	   setScore(args);
+       break;
+    case "EXIT":
+        winclose();
+		break;
+	}
+}
+
+var InternetExplorer = navigator.appName.indexOf("Microsoft") != -1;
+// Handle all the the FSCommand messages in a Flash movie
+function movie_DoFSCommand(command, args) {
+  var movieObj = InternetExplorer ? movie : document.movie;
+  //alert("command:"+command+"\n"+"args:"+args);
+  Flow(command,args);
+ 
+}
+// Hook for Internet Explorer 
+if (navigator.appName && navigator.appName.indexOf("Microsoft") != -1 && 
+	  navigator.userAgent.indexOf("Windows") != -1 && navigator.userAgent.indexOf("Windows 3.1") == -1) {
+	document.write('<SCRIPT LANGUAGE=VBScript\> \n');
+	document.write('on error resume next \n');
+	document.write('Sub movie_FSCommand(ByVal command, ByVal args)\n');
+	document.write('  call movie_DoFSCommand(command, args)\n');
+	document.write('end sub\n');
+	document.write('</SCRIPT\> \n');
+}
+
+function init(){
+
+}
+
+
+
+
+
+//-->
+
+</script>
+
+</head>
+<body bgcolor="#ffffff" align="center" onLoad="init();" onUnload="return unloadPage(currentstatus);">
+<div id="flashDIV" align="center">
+<object classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000" width="1000" height="560" id="main" align="middle">
+<param name="movie" value="main.swf" />
+<param name="quality" value="high" />
+<param name="bgcolor" value="#ffffff" />
+<param name="play" value="true" />
+<param name="loop" value="true" />
+
+<param name="wmode" value="transparent" />
+<param name="scale" value="showall" />
+<param name="menu" value="true" />
+<param name="devicefont" value="false" />
+<param name="salign" value="" />
+<param name="allowScriptAccess" value="always" />
+<param name="allowFullScreen" value="true" />
+<param name="swliveconnect" value="true"/>
+<embed play="true" swliveconnect="true" name="main" allowFullScreen="true" src="main.swf" quality="high" bgcolor="#FFFFFF" width="1000" height="560" type="application/x-shockwave-flash" swliveconnect="true" pluginspage="http://www.macromedia.com/shockwave/download/index.cgi?P1_Prod_Version=ShockwaveFlash"  wmode="transparent"/>
+</object>
+</div>
+</body>
+</html>

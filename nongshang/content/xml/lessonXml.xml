@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<myfile>
+	<info total_time="43"></info>
+	<lesson1 title="一、网点零售业务营销管理实施细则" url="">
+		<lesson2 title="（一）网点零售业务营销管理实施细则" url="1"></lesson2>
+	</lesson1>
+	<lesson1 title="二、课程目录" url="">
+		<lesson2 title="（一）课程目录" url="2"></lesson2>
+	</lesson1>
+	<lesson1 title="三、前言" url="">
+		<lesson2 title="（一）前言" url="3"></lesson2>
+	</lesson1>
+	<lesson1 title="四、零售行长营销管理工作指导" url="">
+		<lesson2 title="（一）零售行长营销管理工作指导" url="4"></lesson2>
+		<lesson2 title="（二）零售行长定位" url="5"></lesson2>
+		<lesson2 title="（三）零售行长职责" url="6"></lesson2>
+		<lesson2 title="（四）工作流程（1）" url="7"></lesson2>
+		<lesson2 title="（五）工作流程（2）" url="8"></lesson2>
+		<lesson2 title="（六）管理工作要点" url="9"></lesson2>
+		<lesson2 title="（七）岗位营销管理要点" url="10"></lesson2>
+	</lesson1>
+	<lesson1 title="九、课程结束" url="">
+		<lesson2 title="（一）课程结束" url="70"></lesson2>
+	</lesson1>
+
+</myfile>
